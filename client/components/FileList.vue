@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mu-data-table :columns="columns" :data="files" no-data-text="愣着啊，上传图片干啥ヽ(#`Д´)ﾉ">
+    <mu-data-table :columns="columns" :data="files" :loading="loading" no-data-text="愣着啊，上传图片干啥ヽ(#`Д´)ﾉ">
       <template slot="th" slot-scope="column">
         <template v-if="column.type === 'checkbox'">
           <mu-checkbox
@@ -19,6 +19,7 @@
           <td class="name">{{ file.oname }}</td>
         </mu-tooltip>
         <td class="osize is-right"><a :href="file.thumbnail" :download="file.oname" class="download-link">{{ filesize(file.osize) }}</a></td>
+        <td class="jsize is-right"><a v-if="file.status === 'success'" :href="file.jurl" :download="file.jname" class="download-link">{{ filesize(file.jsize) }}</a></td>
         <td class="jcheckbox mu-checkbox-col">
           <mu-checkbox
             v-if="file.status === 'success'"
@@ -26,7 +27,7 @@
             @change="toggleSelect('selectJpegs', file)"
           />
         </td>
-        <td class="jsize is-right"><a v-if="file.status === 'success'" :href="file.jurl" :download="file.jname" class="download-link">{{ filesize(file.jsize) }}</a></td>
+        <td class="psize is-right"><a v-if="file.status === 'success'" :href="file.purl" :download="file.pname" class="download-link">{{ file.psize && filesize(file.psize) }}</a></td>
         <td class="pcheckbox mu-checkbox-col">
           <mu-checkbox
             v-if="file.status === 'success'"
@@ -34,7 +35,6 @@
             @change="toggleSelect('selectPngs', file)"
           />
         </td>
-        <td class="psize is-right"><a v-if="file.status === 'success'" :href="file.purl" :download="file.pname" class="download-link">{{ file.psize && filesize(file.psize) }}</a></td>
         <td class="acts is-right">
           <mu-icon v-if="file.status === 'success'" class="act icon-zoom" value="zoom_in" size="20" @click="showComparer(file)" />
           <mu-icon class="act icon-delete" value="close" size="20" @click="$emit('remove', file)" />
@@ -71,10 +71,10 @@ export default {
         { title: '', class: 'thumbnail', width: 48 },
         { title: '文件名' },
         { title: '原始', align: 'right', width: 120 },
-        { type: 'checkbox', class: 'mu-checkbox-col', listname: 'selectJpegs', width: 75 },
         { title: 'JPEG', align: 'right', width: 120 },
-        { type: 'checkbox', class: 'mu-checkbox-col', listname: 'selectPngs', width: 75 },
+        { type: 'checkbox', class: 'mu-checkbox-col', listname: 'selectJpegs', width: 75 },
         { title: 'PNG', align: 'right', width: 120 },
+        { type: 'checkbox', class: 'mu-checkbox-col', listname: 'selectPngs', width: 75 },
         { title: '操作', align: 'right', width: 120 }
       ]
     }
@@ -85,6 +85,9 @@ export default {
         ...this.selectPngs.map(file => file.purl),
         ...this.selectJpegs.map(file => file.jurl)
       ])
+    },
+    loading() {
+      return this.files.some(file => file.status === 'uploading')
     }
   },
   methods: {

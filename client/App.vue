@@ -38,7 +38,7 @@ export default {
             otype: raw.type,
             thumbnail: URL.createObjectURL(raw),
             progress: 0,
-            status: 'ready'
+            status: 'uploading'
           }
 
           fd.append('file', raw)

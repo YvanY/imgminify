@@ -10,5 +10,4 @@ node_modules
 .idea
 .vscode
 
-server/public/assets/*
-server/public/images/*
+server/public

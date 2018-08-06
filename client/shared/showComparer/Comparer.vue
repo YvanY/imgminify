@@ -8,11 +8,9 @@
 
     <div class="carousel">
       <div class="container">
-        <mu-fade-transition mode="out-in">
-          <div v-for="(field, index) in urlFields" v-if="index === active" :key="index" class="item">
-            <a :href="file[field]" target="_blank"><img :src="file[field]" class="img"></a>
-          </div>
-        </mu-fade-transition>
+        <div v-for="(field, index) in urlFields" v-if="index === active" :key="index" class="item">
+          <a :href="file[field]" target="_blank"><img :src="file[field]" class="img"></a>
+        </div>
       </div>
 
       <mu-button class="navigate-btn prev-btn" icon @click="prev">
