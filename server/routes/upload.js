@@ -12,7 +12,7 @@ const types = Object.values(config.formatMap).map(item => item.type)
 const router = express.Router()
 
 const genRandomUploadDir = () => new Promise((resolve, reject) => {
-  crypto.pseudoRandomBytes(16 , (err, raw) => {
+  crypto.pseudoRandomBytes(16, (err, raw) => {
     if (err) return reject(err)
 
     const dirname = raw.toString('hex')
@@ -23,14 +23,14 @@ const genRandomUploadDir = () => new Promise((resolve, reject) => {
 })
 
 const storage = multer.diskStorage({
-  async destination (req, file, cb) {
+  async destination(req, file, cb) {
     try {
       cb(undefined, await genRandomUploadDir())
     } catch (err) {
       cb(err)
     }
   },
-  filename (req, file, cb) {
+  filename(req, file, cb) {
     cb(undefined, filenamify(file.originalname))
   }
 })
@@ -67,7 +67,8 @@ const saveImage = (rs, filename) =>
             dest,
             path: fpath,
             size: ws.bytesWritten
-        })})
+          })
+        })
     })
   )
 
@@ -114,7 +115,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       owidth: dimonsions.width,
       oheight: dimonsions.height,
       osize: ofile.size,
-      ourl: getImageUrl(ofile.path),
+      ourl: getImageUrl(ofile.path)
     }
   })()
 
@@ -145,7 +146,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       jwidth: dimonsions.width,
       jheight: dimonsions.height,
       jsize: file.size,
-      jurl: getImageUrl(file.path),
+      jurl: getImageUrl(file.path)
     }
   })()
 
@@ -165,7 +166,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       pwidth: dimonsions.width,
       pheight: dimonsions.height,
       psize: file.size,
-      purl: getImageUrl(file.path),
+      purl: getImageUrl(file.path)
     }
   })()
 

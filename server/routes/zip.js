@@ -2,8 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const express = require('express')
 const config = require('../config')
-const archiver = require('archiver');
-const createError = require('http-errors')
+const archiver = require('archiver')
 
 const router = express.Router()
 
