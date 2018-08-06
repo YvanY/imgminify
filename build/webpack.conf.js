@@ -2,8 +2,12 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 
 const isDev = process.env.NODE_ENV !== 'production'
+const styleLoader = isDev ? 'style-loader' : MiniCssExtractPlugin.loader
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -70,17 +74,17 @@ module.exports = {
 
       {
         test: /\.less/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+        use: [styleLoader, 'css-loader', 'postcss-loader', 'less-loader']
       },
 
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [styleLoader, 'css-loader', 'postcss-loader', 'sass-loader']
       },
 
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
+        use: [styleLoader, 'css-loader', 'postcss-loader']
       },
 
       {
@@ -126,7 +130,24 @@ module.exports = {
 
 if (isDev) {
   module.exports.entry = ['webpack-hot-middleware/client', './client']
+
   module.exports.plugins.push(
     new webpack.HotModuleReplacementPlugin()
+  )
+} else {
+  module.exports.optimization.minimizer = [
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: true
+    }),
+    new OptimizeCSSAssetsPlugin()
+  ]
+
+  module.exports.plugins.push(
+    new MiniCssExtractPlugin({
+      filename: path.posix.join('assets', '[name].[chunkhash].css'),
+      chunkFilename: path.posix.join('assets', '[chunkhash].css')
+    })
   )
 }
