@@ -5,6 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const config = require('../config/client')
 
 const isDev = process.env.NODE_ENV !== 'production'
 const styleLoader = isDev ? 'style-loader' : MiniCssExtractPlugin.loader
@@ -16,7 +17,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../server/public'),
-    publicPath: '/',
+    publicPath: `${config.clientBaseUrl}/`,
     filename: path.posix.join('assets', isDev ? '[name].js' : '[name].[chunkhash].js'),
     chunkFilename: path.posix.join('assets', '[chunkhash].js')
   },

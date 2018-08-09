@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const filenamify = require('filenamify')
 const gm = require('gm').subClass({ imageMagick: true })
 const PngQuant = require('pngquant')
+const UrlPathAdapter = require('../utils/UrlPathAdapter')
 
 const config = require('../config')
 const types = Object.values(config.formatMap).map(item => item.type)
@@ -42,14 +43,8 @@ const upload = multer({
   }
 })
 
-const getImageUrl = fpath =>
-  path.posix.join('/', path.relative(config.publicPath, fpath).replace(/\\/g, '/'))
-
 const getImageSize = fpath => new Promise((resolve, reject) => {
-  gm(fpath)
-    .size((err, size) => {
-      err ? reject(err) : resolve(size)
-    })
+  gm(fpath).size((err, size) => err ? reject(err) : resolve(size))
 })
 
 const saveImage = (rs, filename) =>
@@ -106,6 +101,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     file: ofile,
     body: options = {}
   } = req
+
   const originPromise = (async () => {
     const dimonsions = await getImageSize(ofile.path)
 
@@ -115,7 +111,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       owidth: dimonsions.width,
       oheight: dimonsions.height,
       osize: ofile.size,
-      ourl: getImageUrl(ofile.path)
+      ourl: UrlPathAdapter.toUrl(ofile.path)
     }
   })()
 
@@ -146,7 +142,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       jwidth: dimonsions.width,
       jheight: dimonsions.height,
       jsize: file.size,
-      jurl: getImageUrl(file.path)
+      jurl: UrlPathAdapter.toUrl(file.path)
     }
   })()
 
@@ -166,7 +162,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
       pwidth: dimonsions.width,
       pheight: dimonsions.height,
       psize: file.size,
-      purl: getImageUrl(file.path)
+      purl: UrlPathAdapter.toUrl(file.path)
     }
   })()
 

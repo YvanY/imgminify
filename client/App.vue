@@ -13,6 +13,7 @@ import Dropzone from '@/components/Dropzone'
 import FileList from '@/components/FileList'
 import OptionsForm from '@/components/OptionsForm'
 import defaultOptions from '@/components/OptionsForm/defaultOptions'
+import { serverBaseUrl } from '@/config'
 
 export default {
   name: 'App',
@@ -66,7 +67,7 @@ export default {
             file.status = 'fail'
           }
 
-          xhr.open('post', '/upload')
+          xhr.open('post', `${serverBaseUrl}/upload`)
           xhr.send(fd)
 
           return file

@@ -43,7 +43,7 @@
     </mu-data-table>
 
     <mu-paper v-if="files.length">
-      <form action="/zip" method="POST" target="_blank">
+      <form :action="action" method="POST" target="_blank">
         <input :value="sources" type="hidden" name="sources">
         <mu-button :disabled="!selectJpegs.length && !selectPngs.length" full-width color="primary" type="submit"><mu-icon left value="save_alt" size="18" />下载</mu-button>
       </form>
@@ -54,6 +54,7 @@
 <script>
 import filesize from 'filesize'
 import showComparer from '@/shared/showComparer'
+import { serverBaseUrl } from '@/config'
 
 export default {
   name: 'FileList',
@@ -65,6 +66,7 @@ export default {
   },
   data() {
     return {
+      action: `${serverBaseUrl}/zip`,
       selectJpegs: [],
       selectPngs: [],
       columns: [
