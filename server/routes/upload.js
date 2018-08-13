@@ -7,6 +7,7 @@ const filenamify = require('filenamify')
 const gm = require('gm').subClass({ imageMagick: true })
 const PngQuant = require('pngquant')
 const UrlPathAdapter = require('../utils/UrlPathAdapter')
+const mkdirp = require('mkdirp')
 
 const config = require('../config')
 const types = Object.values(config.formatMap).map(item => item.type)
@@ -19,7 +20,7 @@ const genRandomUploadDir = () => new Promise((resolve, reject) => {
     const dirname = raw.toString('hex')
     const dirpath = path.join(config.imagePath, dirname)
 
-    fs.mkdir(dirpath, err => err ? reject(err) : resolve(dirpath))
+    mkdirp(dirpath, err => err ? reject(err) : resolve(dirpath))
   })
 })
 

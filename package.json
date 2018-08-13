@@ -10,7 +10,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production server/bin/www",
     "dev": "cross-env NODE_ENV=development npx nodemon server/bin/www",
-    "clean:build": "rimraf server/public/assets/*",
+    "clean:build": "rimraf server/public/index.html && rimraf server/public/assets",
     "clean:images": "rimraf server/public/images/*",
     "build": "npm run clean:build && cross-env NODE_ENV=production webpack --config build/webpack.conf.js",
     "lint": "eslint --ext .js,.vue client server"
@@ -67,6 +67,7 @@
     "filesize": "^3.6.1",
     "gm": "^1.23.1",
     "http-errors": "^1.7.0",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.9.0",
     "multer": "^1.3.1",
     "muse-ui": "^3.0.0-rc.5",
