@@ -100,8 +100,10 @@ const handleCommonOption = (img, options = {}) => {
 router.post('/', upload.single('file'), async (req, res, next) => {
   const {
     file: ofile,
-    body: options = {}
+    body = {}
   } = req
+
+  const options = (body.options && JSON.parse(body.options)) || {}
 
   const originPromise = (async () => {
     const dimonsions = await getImageSize(ofile.path)

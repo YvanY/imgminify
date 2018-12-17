@@ -43,7 +43,7 @@ export default {
           }
 
           fd.append('file', raw)
-          Object.keys(options).forEach(key => fd.append(key, options[key]))
+          fd.append('options', JSON.stringify(options))
 
           xhr.onprogress = ({ loaded, total }) => {
             file.progress = loaded / total
