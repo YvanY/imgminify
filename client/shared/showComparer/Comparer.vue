@@ -4,13 +4,17 @@
       <mu-icon value="close" size="24" color="white" />
     </mu-button>
 
-    <mu-chip class="label" color="grey900">{{ labelContent }}</mu-chip>
+    <mu-chip class="label" color="grey900">
+      {{ labelContent }}
+    </mu-chip>
 
     <div class="carousel">
       <div class="container">
-        <div v-for="(field, index) in urlFields" v-if="index === active" :key="index" class="item">
-          <a :href="file[field]" target="_blank"><img :src="file[field]" class="img"></a>
-        </div>
+        <template v-for="(field, index) in urlFields">
+          <div v-if="index === active" :key="index" class="item">
+            <a :href="file[field]" target="_blank"><img :src="file[field]" class="img"></a>
+          </div>
+        </template>
       </div>
 
       <mu-button class="navigate-btn prev-btn" icon @click="prev">
@@ -51,6 +55,8 @@ export default {
           return 'JPEG'
         case 2:
           return 'PNG'
+        default:
+          return ''
       }
     }
   },

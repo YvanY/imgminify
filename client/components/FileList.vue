@@ -8,7 +8,9 @@
             @change="toggleSelectAll(column.listname)"
           />
         </template>
-        <template v-else>{{ column.title }}</template>
+        <template v-else>
+          {{ column.title }}
+        </template>
       </template>
 
       <template slot-scope="{ row: file }">
@@ -16,10 +18,16 @@
           <div :style="{ backgroundImage: `url(${file.thumbnail})` }" class="img" />
         </td>
         <mu-tooltip :content="file.oname" placement="bottom-start" tooltip-class="name-tooltip">
-          <td class="name">{{ file.oname }}</td>
+          <td class="name">
+            {{ file.oname }}
+          </td>
         </mu-tooltip>
-        <td class="osize is-right"><a :href="file.thumbnail" :download="file.oname" class="download-link">{{ filesize(file.osize) }}</a></td>
-        <td class="jsize is-right"><a v-if="file.status === 'success'" :href="file.jurl" :download="file.jname" class="download-link">{{ filesize(file.jsize) }}</a></td>
+        <td class="osize is-right">
+          <a :href="file.thumbnail" :download="file.oname" class="download-link">{{ filesize(file.osize) }}</a>
+        </td>
+        <td class="jsize is-right">
+          <a v-if="file.status === 'success'" :href="file.jurl" :download="file.jname" class="download-link">{{ filesize(file.jsize) }}</a>
+        </td>
         <td class="jcheckbox mu-checkbox-col">
           <mu-checkbox
             v-if="file.status === 'success'"
@@ -27,7 +35,9 @@
             @change="toggleSelect('selectJpegs', file)"
           />
         </td>
-        <td class="psize is-right"><a v-if="file.status === 'success'" :href="file.purl" :download="file.pname" class="download-link">{{ file.psize && filesize(file.psize) }}</a></td>
+        <td class="psize is-right">
+          <a v-if="file.status === 'success'" :href="file.purl" :download="file.pname" class="download-link">{{ file.psize && filesize(file.psize) }}</a>
+        </td>
         <td class="pcheckbox mu-checkbox-col">
           <mu-checkbox
             v-if="file.status === 'success'"
@@ -45,7 +55,9 @@
     <mu-paper v-if="files.length">
       <form :action="action" method="POST" target="_blank">
         <input :value="sources" type="hidden" name="sources">
-        <mu-button :disabled="!selectJpegs.length && !selectPngs.length" full-width color="primary" type="submit"><mu-icon left value="save_alt" size="18" />下载</mu-button>
+        <mu-button :disabled="!selectJpegs.length && !selectPngs.length" full-width color="primary" type="submit">
+          <mu-icon left value="save_alt" size="18" />下载
+        </mu-button>
       </form>
     </mu-paper>
   </div>

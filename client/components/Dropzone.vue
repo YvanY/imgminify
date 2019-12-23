@@ -11,7 +11,9 @@
   >
     <div class="center">
       <mu-icon class="icon-upload" value="cloud_upload" size="60" />
-      <div class="text">将文件拖到此处，或点击上传</div>
+      <div class="text">
+        将文件拖到此处，或点击上传
+      </div>
     </div>
     <input v-show="false" ref="fileInput" :accept="accept" type="file" multiple @change="handleChange">
   </mu-paper>

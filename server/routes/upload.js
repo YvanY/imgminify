@@ -14,7 +14,7 @@ const types = Object.values(config.formatMap).map(item => item.type)
 const router = express.Router()
 
 const genRandomUploadDir = () => new Promise((resolve, reject) => {
-  crypto.pseudoRandomBytes(16, (err, raw) => {
+  crypto.randomBytes(16, (err, raw) => {
     if (err) return reject(err)
 
     const dirname = raw.toString('hex')
