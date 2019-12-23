@@ -4,9 +4,9 @@
   "description": "An online image optimizer",
   "repository": {
     "type": "git",
-    "url": "git@github.com:wallstreetcn/imgminify.git"
+    "url": "git@github.com:YvanY/imgminify.git"
   },
-  "homepage": "https://github.com/wallstreetcn/imgminify#readme",
+  "homepage": "https://https://github.com/YvanY/imgminify#readme",
   "scripts": {
     "start": "cross-env NODE_ENV=production server/bin/www",
     "dev": "cross-env NODE_ENV=development npx nodemon server/bin/www",

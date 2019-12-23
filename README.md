@@ -2,6 +2,8 @@
 
 > An online image optimizer
 
+![demo](./demo.png)
+
 ## Features
 
 - Creating progressive image (JPEG only)
